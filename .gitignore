@@ -49,6 +49,12 @@ buck-out/
 # For more information about the recommended setup visit:
 # https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Gitignore.md
 
+ios/fastlane/README.md
 ios/fastlane/report.xml
 ios/fastlane/Preview.html
 ios/fastlane/screenshots
+
+android/fastlane/README.md
+android/fastlane/report.xml
+android/fastlane/Preview.html
+android/fastlane/screenshots
