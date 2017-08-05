@@ -18,8 +18,8 @@ default_platform :ios
 platform :ios do
   before_all do
     # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
-    
-    
+
+
   end
 
   desc "Runs all the tests"
@@ -30,9 +30,18 @@ platform :ios do
   desc "Submit a new Beta Build to Apple TestFlight"
   desc "This will also make sure the profile is up to date"
   lane :beta do
+    increment_build_number
     match(type: "appstore") # more information: https://codesigning.guide
     gym(scheme: "UdemyFastlane") # Build your app - more options available
-    pilot
+    pilot(
+      skip_waiting_for_build_processing: true
+    )
+    clean_build_artifacts
+    commit_version_bump(
+      message: "Fastlane iOS: Released new build #{lane_context[SharedValues::BUILD_NUMBER]} [ci skip]",
+      xcodeproj: "./UdemyFastlane.xcodeproj",
+      force: true
+    )
 
     # sh "your_script.sh"
     # You can also use other beta testing services here (run `fastlane actions`)
@@ -69,5 +78,5 @@ end
 # More information about multiple platforms in fastlane: https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Platforms.md
 # All available actions: https://docs.fastlane.tools/actions
 
-# fastlane reports which actions are used. No personal data is recorded. 
+# fastlane reports which actions are used. No personal data is recorded.
 # Learn more at https://github.com/fastlane/fastlane#metrics
