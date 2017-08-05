@@ -1,4 +1,4 @@
-package com.udemyfastlane;
+package io.beplus.udemy.fastlane;
 
 import com.facebook.react.ReactActivity;
 
