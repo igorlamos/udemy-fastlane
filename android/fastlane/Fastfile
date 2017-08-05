@@ -25,6 +25,25 @@ platform :android do
     gradle(task: "test")
   end
 
+  desc "Deploy a new alpha version to the Google Play Store"
+  lane :alpha do
+    version_code = increment_version_code(
+      gradle_file_path: "./app/build.gradle"
+    )
+
+    gradle(task: "assembleRelease")
+
+    supply(
+      track: "alpha",
+      apk: "#{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]}"
+    )
+
+    git_commit(
+      path: "./app/build.gradle",
+      message: "Fastlane Android: Released new build #{version_code} [ci skip]"
+    )
+  end
+
   desc "Submit a new Beta Build to Crashlytics Beta"
   lane :beta do
     gradle(task: "assembleRelease")
@@ -62,5 +81,5 @@ end
 # More information about multiple platforms in fastlane: https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Platforms.md
 # All available actions: https://docs.fastlane.tools/actions
 
-# fastlane reports which actions are used. No personal data is recorded. 
+# fastlane reports which actions are used. No personal data is recorded.
 # Learn more at https://github.com/fastlane/fastlane#metrics
