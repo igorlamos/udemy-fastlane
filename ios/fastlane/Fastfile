@@ -38,7 +38,7 @@ platform :ios do
     )
     clean_build_artifacts
     commit_version_bump(
-      message: "Fastlane iOS: Released new build #{lane_context[SharedValues::BUILD_NUMBER]} [ci skip]",
+      message: "Fastlane iOS: Released new build #{lane_context[SharedValues::BUILD_NUMBER]} to Apple TestFlight [ci skip]",
       xcodeproj: "./UdemyFastlane.xcodeproj",
       force: true
     )
